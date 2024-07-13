@@ -30,11 +30,7 @@ def hash_function(data: str) -> str:
     hex_key = md5(byte_str).hexdigest()
 
     # 16진수 key의 뒤에서 10자리 슬라이스. 앞자리가 0인 경우에는 pad로 교체
-    pad = (
-        hex_key[-10]
-        if hex_key[-10] != "0"
-        else CHARS[((mytime.timestamp_now()) % 15) + 1]
-    )
+    pad = hex_key[-10] if hex_key[-10] != "0" else CHARS[((mytime.ts_now()) % 15) + 1]
     rear_10 = pad + hex_key[-9:]
 
     # 62진수로 변환

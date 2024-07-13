@@ -1,0 +1,17 @@
+*.pyc
+*.swp
+*.zip
+*.sh
+*.bat
+*.exe
+*test.py
+*gitmessage.txt
+.env
+.venv
+
+__pycache__
+
+src/.unitrc
+
+# vscode setting files
+.vscode/

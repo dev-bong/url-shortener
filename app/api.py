@@ -23,7 +23,7 @@ router = APIRouter()
 def create_short_url(table: DynamoTable, s_in: ShortenerInput) -> Any:
     key = shortener.hash_function(s_in.url)
 
-    crud.create_short_url(table, key, s_in.url)
+    crud.create_short_url(table, key, s_in.url, s_in.duration)
 
     return {"short_url": "/".join([settings.BASE_URL, key])}
 
@@ -41,9 +41,10 @@ def redirect_origin_url(
         default=..., description="단축키", min_length=7, max_length=7
     ),
 ) -> Any:
-    item = crud.read_origin_url(table, short_key)
+    item = crud.read_url_info(table, short_key)
 
     if item:
+        crud.update_url_stat(table, short_key)
         return item["origin_url"]
     else:
         raise HTTPException(

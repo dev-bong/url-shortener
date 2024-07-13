@@ -43,3 +43,14 @@ def update_url_stat(table: Table, pk: str) -> None:
     url_stat["latest_at"] = mytime.ts_now()
 
     table.put_item(Item=url_stat)
+
+
+def read_url_stat(table: Table, pk: str) -> dict:
+    # 단축 url 통계 조회
+    stat_key = key_dict(pk, "stat#1")
+    url_stat = table.get_item(Key=stat_key).get("Item", {})
+
+    if "latest_at" in url_stat:
+        url_stat["latest_at"] = mytime.ts2dt(url_stat["latest_at"])
+
+    return url_stat

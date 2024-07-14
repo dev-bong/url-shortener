@@ -6,7 +6,6 @@
 *.exe
 *test.py
 *gitmessage.txt
-.env
 .venv
 
 __pycache__

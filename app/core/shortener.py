@@ -1,3 +1,5 @@
+import random
+
 from hashlib import md5
 from collections import deque
 import string
@@ -37,3 +39,14 @@ def hash_function(data: str) -> str:
     base62_key = n_base(int(rear_10, 16), 62)
 
     return base62_key
+
+
+def make_salt() -> str:
+    # 길이 5짜리 랜덤 문자열(salt) 생성
+    salt = ""
+    random.seed()
+
+    for i in range(5):
+        salt += CHARS[random.randint(0, 62)]
+
+    return salt

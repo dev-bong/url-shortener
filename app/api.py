@@ -21,9 +21,25 @@ router = APIRouter()
     description="입력받은 원본 URL을 고유 단축키로 변환",
 )
 def create_short_url(table: DynamoTable, s_in: ShortenerInput) -> Any:
-    key = shortener.hash_function(s_in.url)
+    salt = ""
+    retry = 0
+    while retry <= 10:
+        key = shortener.hash_function(s_in.url + salt)
+        already = crud.read_url_info(table, key)
 
-    crud.create_short_url(table, key, s_in.url, s_in.duration)
+        # 이미 존재하는 단축키일 경우 재시도
+        if not already:
+            crud.create_short_url(table, key, s_in.url, s_in.duration)
+            break
+
+        salt = shortener.make_salt()
+        retry += 1
+
+    if retry > 10:
+        raise HTTPException(
+            status_code=status.HTTP_408_REQUEST_TIMEOUT,
+            detail="잠시 후에 다시 시도해주세요.",
+        )
 
     return {"short_url": "/".join([settings.BASE_URL, key])}
 

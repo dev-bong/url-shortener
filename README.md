@@ -27,7 +27,7 @@
   &emsp;• python 패키지 관리용 poetry
 </details>
 
-<br>
+***
 
 ### 👩‍💻 설치 및 시작
 #### 1. poetry로 패키지 내려받기
@@ -44,14 +44,24 @@ uvicorn app.main:app --reload
 ```
 ⚠️ 최초 시작 시 dynamodb 테이블을 생성하도록 되어있어 시간이 걸릴 수 있음
 
-<br>
+***
 
 ### 📝 API 문서
 서비스 시작 후..
 - [반응형 문서 (Swagger UI)](http://127.0.0.1:8000/docs)
 - [대안 자동 문서](http://127.0.0.1:8000/redoc)
 
-<br>
+#### ✅ API 테스트
+- `POST /shorten` : 단축 URL 생성
+  - 위 Swagger UI에서 테스트 가능
+- `GET /stats/{short_key}` : 단축 URL 통계 조회
+  - 위 Swagger UI에서 테스트 가능
+- `GET /{short_key}` : 원본 URL 리다이렉션
+  - 브라우저 주소창에 `http://127.0.0.1:8000/{short_key}` 입력하여 리다이렉션 확인 가능
+  - ⚠️ 한번 단축 URL로 접속하면 브라우저 캐시에 저장되어 다시 단축 URL로 접속하여도 통계가 업데이트되지 않음
+    - 브라우저 캐시를 비우거나 시크릿탭으로 재시도해야 통계 업데이트 확인할 수 있음
+
+***
 
 ### 🗃️ 데이터베이스
 AWS DynamoDB를 사용
@@ -68,7 +78,7 @@ AWS DynamoDB를 사용
   * 추후 [DAX](https://aws.amazon.com/ko/dynamodbaccelerator/) 도입 가능 (아직은 서울 리전에 없음. 현재는 elasticache를 이용하는 방법이 있음)
 - 테이블 설계가 어렵지만 서비스가 간단하여 단점이 부각되지 않는다고 판단
 
-<br>
+***
 
 ### ⚡ 보너스 기능
 ##### &emsp;&emsp;✔️ URL 키 만료 기능 (DynamoDB TTL 이용)

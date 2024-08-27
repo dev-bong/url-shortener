@@ -78,10 +78,4 @@ AWS DynamoDB를 사용
   * 추후 [DAX](https://aws.amazon.com/ko/dynamodbaccelerator/) 도입 가능 (아직은 서울 리전에 없음. 현재는 elasticache를 이용하는 방법이 있음)
 - 테이블 설계가 어렵지만 서비스가 간단하여 단점이 부각되지 않는다고 판단
 
-***
-
-### ⚡ 보너스 기능
-##### &emsp;&emsp;✔️ URL 키 만료 기능 (DynamoDB TTL 이용)
-##### &emsp;&emsp;✔️ 통계 기능
-##### &emsp;&emsp;❌ 테스트 코드
 
